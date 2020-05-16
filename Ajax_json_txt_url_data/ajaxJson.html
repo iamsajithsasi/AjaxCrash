@@ -1,0 +1,39 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button class="button">Get User</button>
+    <button class="button2">Get Users</button>
+    <script>
+        document.querySelector('.button').addEventListener('click', loadUser);
+        document.querySelector('.button2').addEventListener('click', loadUsers);
+        function loadUser() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'user.json', true);
+            xhr.onload = function() {
+                var data = JSON.parse(xhr.responseText)
+                console.log(data.name)
+            }
+            xhr.send();
+        }
+        function loadUsers() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', 'users.json', true);
+            xhr.onload = function() {
+                var data = JSON.parse(xhr.responseText)
+                for (i in data) {
+                console.log(data[i].name)
+                }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

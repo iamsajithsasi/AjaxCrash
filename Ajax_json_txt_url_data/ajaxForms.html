@@ -1,0 +1,84 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- php form -->
+    <h1>Php GET form</h1>
+    <form method="GET" action="form.php">
+        <input type="text" name="name" value="Brad">
+        <button type="submit" value="submit" class="button">Submit</button>
+    </form>
+    <h1>Php POST form</h1>
+    <form method="POST" action="form.php">
+        <input type="text" name="name" value="Brad">
+        <button type="submit" value="submit" class="button">Submit</button>
+    </form>
+
+    <!-- ajax form -->
+    <h1>Ajax Get form</h1>
+    <form class="ajaxForm">
+        <input type="text" name="name" class="name" value="Brad">
+        <button type="submit" value="submit" class="button2">Submit</button>
+    </form>
+    <h1>Ajax Post form</h1>
+    <form class="ajaxForm2">
+        <input type="text" name="name" class="name" value="Brad">
+        <button type="submit" value="submit" class="button2">Submit</button>
+    </form>
+
+    <script>
+        // php form
+        document.querySelector('.button').addEventListener('click', loadData);
+        function loadData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'form.php', true);
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(xhr.responseText);
+                } else if(this.status == 404) {
+                    console.log('error');
+                }
+            }
+
+            xhr.send();
+        }
+        // ajax form
+        // get
+        document.querySelector('.ajaxForm').addEventListener('submit', passData);
+        function passData(e) {
+            e.preventDefault();
+            var xhr = new XMLHttpRequest();
+            var name = document.querySelector('.ajaxForm .name').value;
+            xhr.open('GET', 'form.php?name='+name, true);
+            xhr.onreadystatechange = function () {
+                console.log(xhr.responseText);
+            }
+
+            xhr.send();
+        }
+        // post
+        document.querySelector('.ajaxForm2').addEventListener('submit', passsData);
+        function passsData(e) {
+            e.preventDefault();
+            var xhr = new XMLHttpRequest();
+            var name = document.querySelector('.ajaxForm2 .name').value;
+            var params = "name="+name;
+            console.log(params)
+            xhr.open('POST', 'form.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log(xhr.responseText);
+            }
+            xhr.send(params);
+        }
+    </script>
+</body>
+
+</html>
